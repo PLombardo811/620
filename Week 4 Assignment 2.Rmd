@@ -1,0 +1,62 @@
+---
+title: "Week 4 Part 2"
+author: "Peter Lombardo"
+date: "June 29, 2018"
+output: html_document
+---
+
+```{r}
+suppressWarnings(suppressMessages(library("tm")))
+suppressWarnings(suppressMessages(library("RTextTools")))
+suppressWarnings(suppressMessages(library("tidyverse")))
+suppressWarnings(suppressMessages(library("stringr")))
+suppressWarnings(suppressMessages(library("SnowballC")))
+suppressWarnings(suppressMessages(library("wordcloud")))
+suppressWarnings(suppressMessages(library("devtools")))
+suppressWarnings(suppressMessages(library("Rfacebook")))
+suppressWarnings(suppressMessages(library("RCurl")))
+suppressWarnings(suppressMessages(library("rjson")))
+suppressWarnings(suppressMessages(library("quanteda")))
+suppressWarnings(suppressMessages(library("magrittr")))
+```
+```{r}
+url<-  "https://graph.facebook.com/v3.0/10156522593787451/comments?access_token=EAACEdEose0cBAKqZCO2SDqdMHIu6unKSfk1SR1G0veqyXBBu5lsfX2xNq8et2uXSJZCDM1acLVRvR6UmwjCHTZCss8ocuOlm2AmmVfwmoDyMvtqhQrSlMZAilOT7ThZBVsMZA5OVLgEG6qIkZAQd410KpiTf4BZAFY0RdnB2ZBPJNS6SZBxsOdnWGsl8HzfbzZCZAJaqddWegZAWuBwZDZD"
+d<-getURL(url)
+j<-fromJSON(d)
+```
+```{r}
+comments<-sapply(j$data,function(j){list(comment =j$message)})
+commnets_clean <-sapply(comments,function(x)iconv(enc2utf8(x),sub = "byte"))
+stopwords_regex = paste(stopwords('en'), collapse = '\\b|\\b')
+stopwords_regex = paste0('\\b', stopwords_regex, '\\b')
+commnets_clean = stringr::str_replace_all(commnets_clean, stopwords_regex, '')
+commnets_clean2 <- unlist(strsplit(commnets_clean, split=", "))
+commnets_clean3 <- grep("commnets_clean2", iconv(commnets_clean2, "latin1", "ASCII", sub="commnets_clean2"))
+commnets_clean4 <- commnets_clean2[-commnets_clean3]
+commnets_clean <- paste(commnets_clean4, collapse = ", ")
+```
+```{r}
+stopwords1 <- c("the", "this")
+commnets_corpus  <-Corpus(VectorSource(commnets_clean))
+commnets_function <- content_transformer(function(x,pattern)gsub(pattern," ",x))
+commnets_corpus_clean <- tm_map(commnets_corpus,removeWords, stopwords("english"))
+commnets_corpus_clean <- tm_map(commnets_corpus,commnets_function,"/")
+commnets_corpus_clean <- tm_map(commnets_corpus,commnets_function,"@")
+commnets_corpus_clean <- tm_map(commnets_corpus,commnets_function,"\\|")
+commnets_corpus_clean <- tm_map(commnets_corpus,commnets_function,"??")
+commnets_corpus_clean <- tm_map(commnets_corpus,commnets_function,"???")
+commnets_corpus_clean <- tm_map(commnets_corpus,content_transformer(tolower))
+commnets_corpus_clean <- tm_map(commnets_corpus,removePunctuation)
+commnets_corpus_clean <- tm_map(commnets_corpus,stripWhitespace)
+```
+```{r}
+term_matrix <-TermDocumentMatrix(commnets_corpus_clean)
+term_matrix_b<-as.matrix(term_matrix)
+words <- sort(rowSums(term_matrix_b),decreasing = TRUE)
+term_frame<-data.frame(word=names(words),freq=words)
+term_frame <- subset(term_frame, word!="youtu" & word!="https" & word!="the" & word!="this" & word!="http" & word!="com" & word!="shall"& word!="www")
+write.csv(term_frame, file = "term_frame.csv", row.names = FALSE)
+```
+```{r}
+term_frame
+```
