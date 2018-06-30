@@ -20,7 +20,10 @@ suppressWarnings(suppressMessages(library("quanteda")))
 suppressWarnings(suppressMessages(library("magrittr")))
 ```
 ```{r}
-url<-  "https://graph.facebook.com/v3.0/10156522593787451/comments?access_token=EAACEdEose0cBAKqZCO2SDqdMHIu6unKSfk1SR1G0veqyXBBu5lsfX2xNq8et2uXSJZCDM1acLVRvR6UmwjCHTZCss8ocuOlm2AmmVfwmoDyMvtqhQrSlMZAilOT7ThZBVsMZA5OVLgEG6qIkZAQd410KpiTf4BZAFY0RdnB2ZBPJNS6SZBxsOdnWGsl8HzfbzZCZAJaqddWegZAWuBwZDZD"
+ setwd("C:/Users/Peter/Google Drive/CUNY/DATA 620/Week 4")
+```
+```{r}
+url<-  "https://graph.facebook.com/v3.0/10155718075607781/comments?pretty=0&limit=2000&after=QVFIUnI4WXhfX1FSeWtmSEt0c21sRTdPV3N0elM5azBOdnBFNEhTU3lDR1NiT3NIOHF6SnNHVHlHMlM5VjNoakpCQUQ2dHVyMGdXbm9rTkNxSVV4UENuVWpn&access_token=EAACEdEose0cBAGrPAqnexrpdUCv4BPFPXx3ezKYR57JkvAxn5NXdkvpBgPZBOKhAE3o8z0AuthDbrK3Kj8zYNXh6ZB6AL9PvsdcGZAuQOjYbwhIexGzVMLBip0xNh45m2nwGRwpIDqbmkAx5Fzh17DJItclSwYmxyro2Bczw43wyQ5BzjJ0pzpeXEdS2GWgtlRDP9dHdAZDZD"
 d<-getURL(url)
 j<-fromJSON(d)
 ```
