@@ -1,0 +1,95 @@
+---
+title: "Week 4 Part 2"
+author: "Peter Lombardo"
+date: "June 29, 2018"
+output: html_document
+---
+
+```{r}
+suppressWarnings(suppressMessages(library("tm")))
+suppressWarnings(suppressMessages(library("RTextTools")))
+suppressWarnings(suppressMessages(library("tidyverse")))
+suppressWarnings(suppressMessages(library("stringr")))
+suppressWarnings(suppressMessages(library("SnowballC")))
+suppressWarnings(suppressMessages(library("wordcloud")))
+suppressWarnings(suppressMessages(library("devtools")))
+suppressWarnings(suppressMessages(library("Rfacebook")))
+suppressWarnings(suppressMessages(library("RCurl")))
+suppressWarnings(suppressMessages(library("rjson")))
+suppressWarnings(suppressMessages(library("quanteda")))
+suppressWarnings(suppressMessages(library("magrittr")))
+suppressWarnings(suppressMessages(library("rio")))
+suppressWarnings(suppressMessages(library("reader")))
+suppressWarnings(suppressMessages(library("jsonlite")))
+```
+```{r}
+ setwd("C:/Users/Peter/Google Drive/CUNY/DATA 620/Week 6")
+```
+```{r}
+url<- "https://graph.facebook.com/v3.0/10158553971956509/comments?limit=2000&access_token=EAAXzXRYljSoBAKuPP4pqIjLpRrzfD6XcUZCvAxjCXK4OKnMZCOnZAZBwTBCcYfZC5e4jj98ZAe2BRiMyQQQTUIeLxEWSXkpKtsCWwjsO0Q8MfMozINqZCOMogENUZAhBZBJ2oP49kCImZAULRytpn2KR8skHlDSQzwn85aJZCA40xGHFUhgJZCoWnATIHXajsZA953PkZD"
+```
+```{r}
+readlines <-readLines(url, warn = FALSE)
+```
+```{r}
+j_1<- fromJSON(toJSON(readlines))
+j <- fromJSON(j_1)
+```
+```{r}
+j_df <- as.data.frame(j)
+j_df_clean <- c(j_df$data.message)
+```
+```{r}
+write.csv(j_df_clean, file = "commnets_df_CNN.csv", row.names = FALSE)
+```
+```{r}
+url<- "https://graph.facebook.com/v3.0/10155972689970950/comments?limit=2000&access_token=EAAYkD9Fw9ycBANCVHSnVTdZAG0uph7OHlspBaZBPGOyVKnPHiNnSbvqwMRAOMCItS5qfYCjeeGs4SkWkuiuysB4IwmZAuLDTstSshLsdwoq2y34IwNMmz9LGVlNXffwUIXMRdvvDOkajkUB74LGMimIchAQko37OE8sXtcoOZCFTQ9W3HWQ0hHSFBA8LwgFOGqUW0vgAxgZDZD"
+```
+```{r}
+readlines <-readLines(url, warn = FALSE)
+```
+```{r}
+j_1<- fromJSON(toJSON(readlines))
+j <- fromJSON(j_1)
+```
+```{r}
+j_df <- as.data.frame(j)
+j_df_clean <- c(j_df$data.message)
+```
+```{r}
+write.csv(j_df_clean, file = "commnets_df_CBS.csv", row.names = FALSE)
+```
+```{r}
+url<- "https://graph.facebook.com/v3.0/2213748042180811/comments?limit=2000&access_token=EAAYkD9Fw9ycBANCVHSnVTdZAG0uph7OHlspBaZBPGOyVKnPHiNnSbvqwMRAOMCItS5qfYCjeeGs4SkWkuiuysB4IwmZAuLDTstSshLsdwoq2y34IwNMmz9LGVlNXffwUIXMRdvvDOkajkUB74LGMimIchAQko37OE8sXtcoOZCFTQ9W3HWQ0hHSFBA8LwgFOGqUW0vgAxgZDZD"
+```
+```{r}
+readlines <-readLines(url, warn = FALSE)
+```
+```{r}
+j_1<- fromJSON(toJSON(readlines))
+j <- fromJSON(j_1)
+```
+```{r}
+j_df <- as.data.frame(j)
+j_df_clean <- c(j_df$data.message)
+```
+```{r}
+write.csv(j_df_clean, file = "commnets_df_FOX.CSV", row.names = FALSE)
+```
+```{r}
+url<- "https://graph.facebook.com/v3.0/10157467219833812/comments?limit=2000&access_token=EAAYkD9Fw9ycBANCVHSnVTdZAG0uph7OHlspBaZBPGOyVKnPHiNnSbvqwMRAOMCItS5qfYCjeeGs4SkWkuiuysB4IwmZAuLDTstSshLsdwoq2y34IwNMmz9LGVlNXffwUIXMRdvvDOkajkUB74LGMimIchAQko37OE8sXtcoOZCFTQ9W3HWQ0hHSFBA8LwgFOGqUW0vgAxgZDZD"
+```
+```{r}
+readlines <-readLines(url, warn = FALSE)
+```
+```{r}
+j_1<- fromJSON(toJSON(readlines))
+j <- fromJSON(j_1)
+```
+```{r}
+j_df <- as.data.frame(j)
+j_df_clean <- c(j_df$data.message)
+```
+```{r}
+write.csv(j_df_clean, file = "commnets_df_ABC.CSV", row.names = FALSE)
+```
